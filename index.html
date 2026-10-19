@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZAAI LABS — AI Content, Digital Growth & Industrial Technology Studio | UAE • GCC</title>
+  <meta name="description" content="ZAAI LABS is a UAE-based AI, digital growth and industrial tech studio. AI videos & reels, 3D websites, agentic automation, CRM, and ERP/MES shop-floor digitalisation for SMEs, B2B brands and manufacturers across the UAE, GCC & Asia." />
+  <meta name="theme-color" content="#07090E" />
+  <meta property="og:title" content="ZAAI LABS — Where AI Creativity Meets Industrial Precision" />
+  <meta property="og:description" content="AI Videos, High-Performance Websites, Agentic Automation and Shop-Floor Digitalisation (ERP/MES) for the UAE, GCC & Asia." />
+  <meta property="og:image" content="assets/img/hero_showcase.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307090E'/%3E%3Cpath d='M16 18h32L20 46h28' stroke='%2300F0FF' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='48' cy='46' r='5' fill='%23FF6B00'/%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (v3 Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { obsidian: '#07090E', cyan: { neon: '#00F0FF' }, amber: { neon: '#FF6B00' } },
+          fontFamily: { display: ['"Space Grotesk"', 'sans-serif'], sans: ['Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Three.js via import map -->
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+
+<body class="bg-obsidian text-slate-200 font-sans antialiased">
+
+  <!-- Preloader -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-mark"><span></span><span></span><span></span></div>
+      <div class="font-display tracking-[0.4em] text-sm text-white/80 mt-6">ZAAI LABS</div>
+      <div class="loader-bar"><i id="loader-progress"></i></div>
+    </div>
+  </div>
+
+  <!-- 3D WebGL background -->
+  <canvas id="webgl" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="nav-glass mx-auto mt-3 max-w-7xl px-4 md:px-6 h-16 flex items-center justify-between rounded-2xl" aria-label="Main">
+      <a href="#hero" class="flex items-center gap-3 group" id="nav-logo" aria-label="ZAAI LABS home">
+        <span class="logo-mark">
+          <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+            <defs><linearGradient id="lg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#00F0FF"/><stop offset="1" stop-color="#FF6B00"/></linearGradient></defs>
+            <rect x="1" y="1" width="38" height="38" rx="10" fill="none" stroke="url(#lg)" stroke-width="1.5"/>
+            <path d="M11 12h18L13 28h16" stroke="url(#lg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="29" cy="28" r="2.6" fill="#FF6B00"/>
+          </svg>
+        </span>
+        <span class="flex flex-col leading-none">
+          <span class="font-display font-bold tracking-[0.18em] text-white text-[15px] logo-text">ZAAI<span class="text-accent"> LABS</span></span>
+          <span class="status-pill mt-1"><i class="status-dot"></i>UAE • GCC • GLOBAL</span>
+        </span>
+      </a>
+
+      <ul class="hidden lg:flex items-center gap-1 text-[13px] font-medium" id="nav-links">
+        <li><a class="nav-link" href="#verticals">Verticals</a></li>
+        <li><a class="nav-link" href="#industrial" id="nav-industrial">Industrial Tech</a></li>
+        <li><a class="nav-link" href="#packages">Launch Packages</a></li>
+        <li><a class="nav-link" href="#process">Process</a></li>
+        <li><a class="nav-link" href="#portfolio">Portfolio</a></li>
+        <li><a class="nav-link" href="#founders">Founders</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <a href="#contact" class="btn-neon hidden md:inline-flex text-[13px]" id="nav-cta">
+          <span class="btn-pulse"></span>Book 15-Min Discovery Call
+        </a>
+        <button id="menu-toggle" class="lg:hidden menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu lg:hidden" hidden>
+      <a href="#verticals">Verticals</a>
+      <a href="#industrial">Industrial Tech</a>
+      <a href="#packages">Launch Packages</a>
+      <a href="#process">Process</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#founders">Founders</a>
+      <a href="#contact" class="btn-neon justify-center mt-2">Book 15-Min Discovery Call</a>
+    </div>
+  </header>
+
+  <main id="content">
+
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="relative min-h-[100svh] flex items-center pt-28 pb-16">
+      <div class="mx-auto max-w-7xl px-5 md:px-8 w-full grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 relative z-10">
+          <div class="hero-badge reveal-hero">
+            <span class="badge-dot"></span>
+            UAE'S PREMIER AI, DIGITAL &amp; INDUSTRIAL TECH STUDIO
+          </div>
+          <h1 class="font-display font-bold text-white leading-[1.02] tracking-tight mt-6 text-[2.6rem] sm:text-6xl xl:text-[5.2rem]">
+            <span class="line"><span class="reveal-hero inline-block">Where <span class="grad-cyan">AI Creativity</span></span></span>
+            <span class="line"><span class="reveal-hero inline-block">Meets <span class="grad-amber">Industrial</span></span></span>
+            <span class="line"><span class="reveal-hero inline-block">Precision.</span></span>
+          </h1>
+          <p class="reveal-hero mt-6 max-w-2xl text-base md:text-lg text-slate-400 leading-relaxed">
+            ZAAI LABS empowers SMEs, B2B brands, and manufacturers across the UAE, GCC &amp; Asia with high-converting
+            <strong class="text-slate-200 font-medium">AI Videos</strong>, <strong class="text-slate-200 font-medium">High-Performance Websites</strong>,
+            <strong class="text-slate-200 font-medium">Agentic Automation</strong>, and <strong class="text-slate-200 font-medium">Shop-Floor Digitalisation (ERP/MES)</strong>.
+          </p>
+          <div class="reveal-hero mt-9 flex flex-wrap gap-4">
+            <a href="#packages" class="btn-neon btn-lg" id="hero-cta-packages">Explore Launch Packages
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#contact" class="btn-glass btn-lg" id="hero-cta-discovery">Book Industrial/AI Discovery</a>
+          </div>
+
+          <!-- 3D Mode Switcher -->
+          <div class="reveal-hero mt-10 mode-switch" role="radiogroup" aria-label="3D scene mode">
+            <span class="mode-label">LIVE 3D ENGINE</span>
+            <div class="mode-track">
+              <button role="radio" aria-checked="true" class="mode-opt active" data-mode="creative" id="mode-creative">
+                <i class="mode-ico c"></i>Creative AI Mode
+              </button>
+              <button role="radio" aria-checked="false" class="mode-opt" data-mode="industrial" id="mode-industrial">
+                <i class="mode-ico a"></i>Industrial OT/IT Mode
+              </button>
+              <span class="mode-thumb" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero HUD -->
+        <div class="lg:col-span-5 relative h-[340px] sm:h-[420px] lg:h-[560px] pointer-events-none" aria-hidden="true">
+          <div class="hud hud-tl reveal-hero"><span class="hud-k">CORE.STATE</span><span class="hud-v" id="hud-state">NEURAL / SYNTH</span></div>
+          <div class="hud hud-tr reveal-hero"><span class="hud-k">THROUGHPUT</span><span class="hud-v"><b id="hud-num">98.6</b>%</span></div>
+          <div class="hud hud-bl reveal-hero"><span class="hud-k">NODES</span><span class="hud-v" id="hud-nodes">4,096</span></div>
+          <div class="hud hud-br reveal-hero"><span class="hud-k">REGION</span><span class="hud-v">DXB · AUH · RUH</span></div>
+          <div class="core-ring"></div>
+        </div>
+      </div>
+
+      <a href="#showcase" class="scroll-cue" aria-label="Scroll to explore"><span></span></a>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>AI Video Production</span><i>◆</i><span>Reels &amp; Shorts Engine</span><i>◆</i><span>3D Websites</span><i>◆</i><span>Agentic AI Apps</span><i>◆</i><span>CRM Automation</span><i>◆</i><span class="amb">MES / OEE</span><i>◆</i><span class="amb">Industrial ERP</span><i>◆</i><span class="amb">HSE Training Media</span><i>◆</i><span>YouTube Growth</span><i>◆</i><span>Podcast Repurposing</span><i>◆</i>
+        <span>AI Video Production</span><i>◆</i><span>Reels &amp; Shorts Engine</span><i>◆</i><span>3D Websites</span><i>◆</i><span>Agentic AI Apps</span><i>◆</i><span>CRM Automation</span><i>◆</i><span class="amb">MES / OEE</span><i>◆</i><span class="amb">Industrial ERP</span><i>◆</i><span class="amb">HSE Training Media</span><i>◆</i><span>YouTube Growth</span><i>◆</i><span>Podcast Repurposing</span><i>◆</i>
+      </div>
+    </div>
+
+    <!-- ===================== SHOWCASE ===================== -->
+    <section id="showcase" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="showcase-frame reveal" data-tilt data-tilt-max="4">
+          <img src="assets/img/hero_showcase.jpg" alt="Futuristic AI creative studio merged with a smart industrial factory floor in Dubai with holographic dashboards and robotic arms" width="1600" height="893" fetchpriority="high" />
+          <div class="showcase-overlay"></div>
+          <div class="showcase-chip chip-1 glass"><span class="chip-dot c"></span><div><b>Creative Engine</b><small>AI Video · Web · Reels</small></div></div>
+          <div class="showcase-chip chip-2 glass"><span class="chip-dot a"></span><div><b>Industrial Engine</b><small>ERP · MES · OEE</small></div></div>
+          <div class="showcase-chip chip-3 glass"><span class="chip-dot g"></span><div><b>Human-in-the-loop</b><small>QA on every release</small></div></div>
+          <div class="showcase-caption">
+            <span class="eyebrow">ONE STUDIO · TWO ENGINES</span>
+            <h2 class="font-display text-2xl md:text-4xl font-semibold text-white mt-2 max-w-xl">Creative AI and shop-floor technology, delivered under one roof.</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
+          <div class="stat glass reveal"><b data-count="3">0</b><span>Strategic Pillars</span></div>
+          <div class="stat glass reveal"><b data-count="13" data-suffix="+">0</b><span>Specialist Services</span></div>
+          <div class="stat glass reveal"><b data-count="4">0</b><span>Quality Gates / Project</span></div>
+          <div class="stat glass reveal"><b data-count="15" data-suffix=" min">0</b><span>Free Discovery Call</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VERTICALS ===================== -->
+    <section id="verticals" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="section-head reveal">
+          <span class="eyebrow">DUAL-ENGINE BUSINESS VERTICALS</span>
+          <h2 class="section-title">Three pillars. <span class="grad-cyan">One growth system.</span></h2>
+          <p class="section-sub">From scroll-stopping AI media to OT/IT-integrated factory dashboards — pick a pillar to explore what we build.</p>
+        </div>
+
+        <div class="tabs reveal" role="tablist" aria-label="Business verticals">
+          <button class="tab active" role="tab" aria-selected="true" data-filter="p1" id="tab-p1">
+            <small>P1 LAUNCH</small>AI Media &amp; Digital Growth
+          </button>
+          <button class="tab" role="tab" aria-selected="false" data-filter="p2" id="tab-p2">
+            <small>P1 / P2</small>AI Automation &amp; Sales
+          </button>
+          <button class="tab tab-amber" role="tab" aria-selected="false" data-filter="p3" id="tab-p3">
+            <small>SPECIALIST DIFFERENTIATOR</small>Industrial Tech &amp; Shop-Floor
+          </button>
+        </div>
+
+        <div class="bento" id="bento">
+          <!-- P1 -->
+          <article class="card tilt-card span-2 row-2 has-img" data-group="p1" data-tilt>
+            <img src="assets/img/ai_video_reels.jpg" alt="Virtual film production studio with AI holographic avatars and timeline editing displays" loading="lazy" width="1600" height="1195" />
+            <div class="card-body">
+              <span class="card-tag">AI VIDEO</span>
+              <h3>AI Video Production</h3>
+              <p>AI-assisted explainers, product demos, training videos, corporate stories &amp; multi-language localisation (EN · AR · HI &amp; more).</p>
+            </div>
+          </article>
+          <article class="card tilt-card" data-group="p1" data-tilt>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 9l5 3-5 3z"/></svg></div>
+            <h3>Reels &amp; Shorts Engine</h3>
+            <p>High-retention short-form reels, hooks, captions &amp; monthly 8 / 12 / 20-video retainer bundles.</p>
+          </article>
+          <article class="card tilt-card" data-group="p1" data-tilt>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></div>
+            <h3>3D &amp; High-Convert Website Design</h3>
+            <p>Business sites, landing pages, SEO, analytics &amp; monthly Website Care Plans.</p>
+          </article>
+          <article class="card tilt-card span-2 has-img short" data-group="p1" data-tilt>
+            <img src="assets/img/podcast_studio.jpg" alt="Luxury podcast and YouTube creator studio in Dubai with neon panels and floating web wireframes" loading="lazy" width="1600" height="1195" />
+            <div class="card-body">
+              <span class="card-tag">YOUTUBE · PODCAST</span>
+              <h3>YouTube Launch &amp; Management</h3>
+              <p>End-to-end channel setup, branding, content strategy, thumbnails &amp; editing.</p>
+            </div>
+          </article>
+          <article class="card tilt-card span-4" data-group="p1" data-tilt>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0M12 17v5"/></svg></div>
+            <h3>Content Repurposing &amp; Podcast Production</h3>
+            <p>Turning long-form podcasts &amp; webinars into viral clips, quote cards, blogs, and show notes — one recording, 30+ assets.</p>
+          </article>
+
+          <!-- P2 -->
+          <article class="card tilt-card span-2 row-2 has-img" data-group="p2" data-tilt hidden>
+            <img src="assets/img/ai_automation.jpg" alt="Glowing autonomous AI neural network connecting CRM pipelines, documents and analytics" loading="lazy" width="1600" height="1195" />
+            <div class="card-body">
+              <span class="card-tag">AGENTIC AI</span>
+              <h3>AI Automation &amp; Agentic AI Apps</h3>
+              <p>Lead intake, FAQ assistants, document workflows, and custom agentic apps with human-in-the-loop safety.</p>
+            </div>
+          </article>
+          <article class="card tilt-card span-2" data-group="p2" data-tilt hidden>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg></div>
+            <h3>CRM &amp; Sales Enablement</h3>
+            <p>Pipeline setup, automated follow-ups, smart forms, and live sales dashboards your team will actually use.</p>
+          </article>
+          <article class="card tilt-card" data-group="p2" data-tilt hidden>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M2 8l10-5 10 5-10 5z"/><path d="M6 10v5c3 3 9 3 12 0v-5"/></svg></div>
+            <h3>AI Training &amp; Workshops</h3>
+            <p>Practical corporate prompt workflows and safe AI adoption programmes.</p>
+          </article>
+          <article class="card tilt-card" data-group="p2" data-tilt hidden>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div>
+            <h3>SEO &amp; Digital Presence</h3>
+            <p>Keyword mapping, local UAE/GCC SEO, and conversion tracking.</p>
+          </article>
+
+          <!-- P3 -->
+          <article class="card tilt-card span-2 row-2 has-img amber" data-group="p3" data-tilt hidden>
+            <img src="assets/img/industrial_mes.jpg" alt="Smart manufacturing plant with real-time OEE dashboard hologram and engineers with tablets" loading="lazy" width="1600" height="1195" />
+            <div class="card-body">
+              <span class="card-tag">MES · OEE</span>
+              <h3>MES / Shop-Floor Digitalisation</h3>
+              <p>Real-time production tracking, downtime/OEE monitoring, quality traceability &amp; machine-data (OT/IT) integration.</p>
+            </div>
+          </article>
+          <article class="card tilt-card amber" data-group="p3" data-tilt hidden>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+            <h3>Industrial ERP Consulting</h3>
+            <p>Paid discovery, ERP selection/configuration, work orders, inventory, purchasing &amp; maintenance workflows.</p>
+          </article>
+          <article class="card tilt-card amber" data-group="p3" data-tilt hidden>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V5M16 16v-4M20 16V8"/></svg></div>
+            <h3>Industrial Dashboards</h3>
+            <p>Live KPIs for production, maintenance, inventory, and energy operations.</p>
+          </article>
+          <article class="card tilt-card span-2 has-img short amber" data-group="p3" data-tilt hidden>
+            <img src="assets/img/digital_twin.jpg" alt="Digital twin of heavy industrial machinery with maintenance telemetry and HSE safety holograms" loading="lazy" width="1600" height="1195" />
+            <div class="card-body">
+              <span class="card-tag">TECHNICAL MEDIA</span>
+              <h3>Industrial Technical Media</h3>
+              <p>Machine demos, HSE/safety training videos, maintenance explainers &amp; digital product catalogues.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INDUSTRIAL SPOTLIGHT ===================== -->
+    <section id="industrial" class="relative py-24 md:py-32 industrial-zone">
+      <div class="mx-auto max-w-7xl px-5 md:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="eyebrow amber">INDUSTRIAL TECH · OT/IT</span>
+          <h2 class="section-title text-left">Your shop floor, <span class="grad-amber">live in real time.</span></h2>
+          <p class="section-sub text-left mx-0">Most studios stop at marketing. We also walk the plant floor — mapping machines, downtime reasons and work orders into dashboards that operators, supervisors and owners trust.</p>
+          <ul class="ind-list mt-8">
+            <li><b>01</b><div><h4>Site survey &amp; process mapping</h4><p>Paid discovery with signed scope before a single line of code.</p></div></li>
+            <li><b>02</b><div><h4>OT/IT integration with security review</h4><p>PLC / sensor data bridged safely to ERP, MES and BI layers.</p></div></li>
+            <li><b>03</b><div><h4>OEE, downtime &amp; quality traceability</h4><p>Availability × Performance × Quality — visible per line, per shift.</p></div></li>
+          </ul>
+        </div>
+
+        <div class="oee-panel glass reveal" data-tilt data-tilt-max="6" aria-label="Sample live OEE dashboard (demo data)">
+          <div class="oee-head">
+            <span><i class="live-dot"></i> LINE-03 · DEMO TELEMETRY</span>
+            <span class="font-mono text-xs text-slate-500" id="oee-clock">--:--:--</span>
+          </div>
+          <div class="oee-gauges">
+            <div class="gauge" style="--v:0.91" data-key="avail"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="g-fill" cx="50" cy="50" r="42"/></svg><b>91%</b><small>Availability</small></div>
+            <div class="gauge" style="--v:0.87" data-key="perf"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="g-fill" cx="50" cy="50" r="42"/></svg><b>87%</b><small>Performance</small></div>
+            <div class="gauge" style="--v:0.98" data-key="qual"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="g-fill" cx="50" cy="50" r="42"/></svg><b>98%</b><small>Quality</small></div>
+          </div>
+          <div class="oee-total"><span>OVERALL OEE</span><b id="oee-total">77.6%</b></div>
+          <div class="oee-bars" id="oee-bars" aria-hidden="true"></div>
+          <div class="oee-foot"><span>Downtime top reason: <b class="text-amber-300">Changeover</b></span><span>Shift B</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PACKAGES ===================== -->
+    <section id="packages" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="section-head reveal">
+          <span class="eyebrow">ROI &amp; PACKAGE CONFIGURATOR</span>
+          <h2 class="section-title">Three signature <span class="grad-cyan">launch offers.</span></h2>
+          <p class="section-sub">Configure an entry point and see exactly what lands in your hands. Every package is scoped and quoted after a 15-minute discovery call.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Package 1 -->
+          <article class="pkg tilt-card reveal" data-tilt id="pkg-reels">
+            <div class="pkg-top">
+              <span class="pkg-num">01</span>
+              <span class="pkg-badge">MONTHLY RETAINER</span>
+            </div>
+            <h3>Growth Reels &amp; AI Video Retainer</h3>
+            <p class="pkg-desc">Monthly bundle + AI explainers &amp; multi-platform repurposing.</p>
+            <div class="seg" role="radiogroup" aria-label="Videos per month">
+              <button class="seg-opt active" data-videos="8" role="radio" aria-checked="true">8 videos</button>
+              <button class="seg-opt" data-videos="12" role="radio" aria-checked="false">12 videos</button>
+              <button class="seg-opt" data-videos="20" role="radio" aria-checked="false">20 videos</button>
+            </div>
+            <div class="pkg-metrics">
+              <div><b id="m-assets">32</b><small>platform-ready assets / mo</small></div>
+              <div><b id="m-hooks">24</b><small>hook variations tested</small></div>
+            </div>
+            <ul class="pkg-list">
+              <li>Scripting, hooks &amp; captions</li>
+              <li>AI explainer / product demo add-on</li>
+              <li>IG · TikTok · YouTube Shorts · LinkedIn cuts</li>
+              <li>Monthly performance review</li>
+            </ul>
+            <a href="#contact" class="btn-glass w-full justify-center mt-auto" data-preselect="AI Video / Reels">Scope this retainer</a>
+          </article>
+
+          <!-- Package 2 -->
+          <article class="pkg tilt-card featured reveal" data-tilt id="pkg-web">
+            <div class="pkg-glow"></div>
+            <div class="pkg-top">
+              <span class="pkg-num">02</span>
+              <span class="pkg-badge hot">MOST REQUESTED</span>
+            </div>
+            <h3>Next-Gen Business Website + Care Plan</h3>
+            <p class="pkg-desc">Custom 3D / modern website, SEO foundation, analytics &amp; monthly security/uptime care.</p>
+            <div class="seg" role="radiogroup" aria-label="Website scope">
+              <button class="seg-opt active" data-site="landing" role="radio" aria-checked="true">Landing</button>
+              <button class="seg-opt" data-site="business" role="radio" aria-checked="false">Business</button>
+              <button class="seg-opt" data-site="3d" role="radio" aria-checked="false">3D Flagship</button>
+            </div>
+            <div class="pkg-metrics">
+              <div><b id="m-pages">1–2</b><small>pages designed</small></div>
+              <div><b id="m-weeks">2–3</b><small>weeks to launch*</small></div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="care-toggle" checked />
+              <span class="toggle-ui"></span>
+              <span>Include monthly Website Care Plan</span>
+            </label>
+            <ul class="pkg-list" id="web-list">
+              <li>Conversion-first UX &amp; copy</li>
+              <li>Technical SEO + GA4 / conversion tracking</li>
+              <li data-care>Security patches, uptime &amp; backups</li>
+              <li data-care>Monthly content updates</li>
+            </ul>
+            <a href="#contact" class="btn-neon w-full justify-center mt-auto" data-preselect="3D Website">Scope my website</a>
+          </article>
+
+          <!-- Package 3 -->
+          <article class="pkg tilt-card amber reveal" data-tilt id="pkg-discovery">
+            <div class="pkg-top">
+              <span class="pkg-num">03</span>
+              <span class="pkg-badge amb">PAID ASSESSMENT</span>
+            </div>
+            <h3>AI Workflow &amp; Industrial (ERP/MES) Discovery</h3>
+            <p class="pkg-desc">Deep-dive before fixed-scope implementation — no guesswork, no scope creep.</p>
+            <div class="seg" role="radiogroup" aria-label="Discovery focus">
+              <button class="seg-opt active" data-disc="ai" role="radio" aria-checked="true">AI Workflow</button>
+              <button class="seg-opt" data-disc="erp" role="radio" aria-checked="false">ERP</button>
+              <button class="seg-opt" data-disc="mes" role="radio" aria-checked="false">MES / OEE</button>
+            </div>
+            <div class="pkg-metrics">
+              <div><b id="m-maps">6+</b><small>processes mapped</small></div>
+              <div><b id="m-out">1</b><small>prototype roadmap</small></div>
+            </div>
+            <ul class="pkg-list" id="disc-list">
+              <li>Process mapping workshops</li>
+              <li>Automation opportunity scoring</li>
+              <li>KPI architecture</li>
+              <li>Prototype &amp; fixed-scope roadmap</li>
+            </ul>
+            <a href="#contact" class="btn-amber w-full justify-center mt-auto" data-preselect="Industrial ERP / MES / Dashboards">Book a discovery assessment</a>
+          </article>
+        </div>
+        <p class="text-xs text-slate-500 mt-6 text-center">*Indicative timelines; confirmed after discovery &amp; signed brief.</p>
+      </div>
+    </section>
+
+    <!-- ===================== PROCESS ===================== -->
+    <section id="process" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8">
+        <div class="section-head reveal">
+          <span class="eyebrow">STANDARD EXECUTION WORKFLOW</span>
+          <h2 class="section-title">Four steps. <span class="grad-cyan">Strict quality gates.</span></h2>
+          <p class="section-sub">Every engagement — reel, website, agent or factory dashboard — passes the same human-reviewed pipeline.</p>
+        </div>
+
+        <div class="timeline" id="timeline">
+          <div class="tl-line"><i id="tl-progress"></i></div>
+
+          <div class="tl-step">
+            <div class="tl-node"><span>01</span></div>
+            <article class="tl-card tilt-card" data-tilt>
+              <span class="tl-gate">GATE 1</span>
+              <h3>Discovery &amp; Scope</h3>
+              <p>Signed brief, KPI mapping, or site survey for industrial plants.</p>
+              <div class="tl-chips"><span>Signed brief</span><span>KPI map</span><span>Site survey</span></div>
+            </article>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node"><span>02</span></div>
+            <article class="tl-card tilt-card" data-tilt>
+              <span class="tl-gate">GATE 2</span>
+              <h3>Prototype &amp; First Cut</h3>
+              <p>Storyboards, staging websites, or live dashboard wireframes.</p>
+              <div class="tl-chips"><span>Storyboards</span><span>Staging site</span><span>Wireframes</span></div>
+            </article>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node amber"><span>03</span></div>
+            <article class="tl-card tilt-card" data-tilt>
+              <span class="tl-gate amb">GATE 3</span>
+              <h3>QA, Security &amp; Human Review</h3>
+              <p>OT/IT security checks, rights verification, mobile/SEO QA.</p>
+              <div class="tl-chips"><span>OT/IT security</span><span>Rights check</span><span>Mobile + SEO QA</span></div>
+            </article>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node"><span>04</span></div>
+            <article class="tl-card tilt-card" data-tilt>
+              <span class="tl-gate">GATE 4</span>
+              <h3>Launch &amp; Recurring Scale</h3>
+              <p>Go-live, team training, UAT sign-off, and monthly retainer optimisation.</p>
+              <div class="tl-chips"><span>Go-live</span><span>UAT sign-off</span><span>Retainer</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PORTFOLIO ===================== -->
+    <section id="portfolio" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-7xl px-5 md:px-8">
+        <div class="section-head reveal">
+          <span class="eyebrow">PORTFOLIO SHOWCASE</span>
+          <h2 class="section-title">Concepts we're <span class="grad-cyan">built to ship.</span></h2>
+          <p class="section-sub">Six showcase concepts across our creative and industrial engines. Click any card to see the build.</p>
+        </div>
+
+        <div class="pf-grid">
+          <button class="pf-card tilt-card reveal pf-a" data-tilt data-case="0" id="case-1">
+            <img src="assets/img/digital_twin.jpg" alt="" loading="lazy" width="1600" height="1195" />
+            <span class="pf-tag amb">INDUSTRIAL MEDIA</span>
+            <span class="pf-title">AI Industrial Machine Demo &amp; HSE Training Video</span>
+            <span class="pf-arrow">↗</span>
+          </button>
+          <button class="pf-card tilt-card reveal pf-b" data-tilt data-case="1" id="case-2">
+            <img src="assets/img/industrial_mes.jpg" alt="" loading="lazy" width="1600" height="1195" />
+            <span class="pf-tag amb">MES · OEE</span>
+            <span class="pf-title">Real-Time Factory OEE &amp; MES Shop-Floor Dashboard</span>
+            <span class="pf-arrow">↗</span>
+          </button>
+          <button class="pf-card tilt-card reveal pf-c" data-tilt data-case="2" id="case-3">
+            <img src="assets/img/ai_video_reels.jpg" alt="" loading="lazy" width="1600" height="1195" />
+            <span class="pf-tag">REELS · YOUTUBE</span>
+            <span class="pf-title">Viral B2B Founder Reels &amp; YouTube Growth System</span>
+            <span class="pf-arrow">↗</span>
+          </button>
+          <button class="pf-card tilt-card reveal pf-d" data-tilt data-case="3" id="case-4">
+            <img src="assets/img/ai_automation.jpg" alt="" loading="lazy" width="1600" height="1195" />
+            <span class="pf-tag">AGENTIC AI</span>
+            <span class="pf-title">Automated Lead-to-CRM AI Agent Workflow</span>
+            <span class="pf-arrow">↗</span>
+          </button>
+          <button class="pf-card tilt-card reveal pf-e" data-tilt data-case="4" id="case-5">
+            <img src="assets/img/hero_showcase.jpg" alt="" loading="lazy" width="1600" height="893" />
+            <span class="pf-tag">3D WEB</span>
+            <span class="pf-title">3D Interactive Corporate Website for UAE Contractor</span>
+            <span class="pf-arrow">↗</span>
+          </button>
+          <button class="pf-card tilt-card reveal pf-f" data-tilt data-case="5" id="case-6">
+            <img src="assets/img/podcast_studio.jpg" alt="" loading="lazy" width="1600" height="1195" />
+            <span class="pf-tag">PODCAST</span>
+            <span class="pf-title">Executive B2B Podcast &amp; Content Repurposing Engine</span>
+            <span class="pf-arrow">↗</span>
+          </button>
+        </div>
+      </div>
+
+      <dialog id="case-dialog" class="case-dialog" aria-labelledby="case-title">
+        <div class="case-inner">
+          <button class="case-close" id="case-close" aria-label="Close case study">✕</button>
+          <img id="case-img" src="assets/img/hero_showcase.jpg" alt="" width="1600" height="1195" />
+          <div class="p-6 md:p-8">
+            <span class="eyebrow" id="case-tag">CASE</span>
+            <h3 id="case-title" class="font-display text-2xl md:text-3xl text-white font-semibold mt-2">Case</h3>
+            <p id="case-desc" class="text-slate-400 mt-3 leading-relaxed"></p>
+            <div class="grid sm:grid-cols-3 gap-3 mt-6" id="case-pts"></div>
+            <a href="#contact" class="btn-neon mt-7" id="case-cta">Build something like this</a>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- ===================== FOUNDERS ===================== -->
+    <section id="founders" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8">
+        <div class="section-head reveal">
+          <span class="eyebrow">LEADERSHIP</span>
+          <h2 class="section-title">Founder-led. <span class="grad-cyan">Founder-accountable.</span></h2>
+          <p class="section-sub">Every ZAAI LABS engagement has a founding partner on it — from the first call to the final sign-off.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <article class="founder tilt-card reveal" data-tilt id="founder-abhishek">
+            <div class="avatar"><span>AK</span><i></i><i></i></div>
+            <div>
+              <span class="eyebrow">FOUNDING PARTNER</span>
+              <h3>Abhishek Kumar</h3>
+              <p>Leads founder-led strategy and client partnerships — translating business goals into content, web and automation roadmaps that deliver measurable growth for SMEs and B2B brands.</p>
+              <div class="tags"><span>Growth Strategy</span><span>Client Trust</span><span>Creative Direction</span></div>
+            </div>
+          </article>
+          <article class="founder tilt-card amber reveal" data-tilt id="founder-nitesh">
+            <div class="avatar amber"><span>NK</span><i></i><i></i></div>
+            <div>
+              <span class="eyebrow amber">FOUNDING PARTNER</span>
+              <h3>Nitesh Kumar</h3>
+              <p>Drives technical and industrial oversight — ERP/MES, OT/IT integration and AI systems — with dedicated quality assurance across every release in the UAE, GCC and Asia.</p>
+              <div class="tags"><span>Industrial Tech</span><span>OT/IT Systems</span><span>Quality Assurance</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+          <div class="pillar glass reveal"><b>◆</b><span>Founder-led strategy</span></div>
+          <div class="pillar glass reveal"><b>◆</b><span>Direct client access</span></div>
+          <div class="pillar glass reveal"><b class="text-[#FF6B00]">◆</b><span>Technical &amp; industrial oversight</span></div>
+          <div class="pillar glass reveal"><b>◆</b><span>Human QA on every delivery</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="relative py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8 grid lg:grid-cols-5 gap-10">
+        <div class="lg:col-span-2 reveal">
+          <span class="eyebrow">DISCOVERY BOOKING</span>
+          <h2 class="section-title text-left">Scope your project <span class="grad-cyan">in 60 seconds.</span></h2>
+          <p class="section-sub text-left mx-0">Tell us where you are and what you need. A founding partner will reply within one business day with a 15-minute discovery slot.</p>
+          <div class="contact-meta mt-8">
+            <div><small>HQ FOCUS</small><b>Dubai · United Arab Emirates</b></div>
+            <div><small>MARKETS</small><b>UAE · GCC · Asia</b></div>
+            <div><small>RESPONSE</small><b>&lt; 1 business day</b></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-3 reveal">
+          <form id="scope-form" class="scope glass" novalidate>
+            <div class="scope-progress"><i id="scope-bar"></i></div>
+            <div class="scope-steps-label font-mono text-[11px] text-slate-500 mb-5">STEP <b id="step-num" class="text-white">1</b> / 4</div>
+
+            <fieldset class="step active" data-step="1">
+              <legend>What best describes your business?</legend>
+              <div class="opt-grid">
+                <label class="opt"><input type="radio" name="industry" value="SME / Local Business" required /><span><b>SME / Local Business</b><small>Retail, clinics, services, F&amp;B</small></span></label>
+                <label class="opt"><input type="radio" name="industry" value="B2B Corporate" /><span><b>B2B Corporate</b><small>Consulting, logistics, tech</small></span></label>
+                <label class="opt amber"><input type="radio" name="industry" value="Manufacturing / Plant" /><span><b>Manufacturing / Plant</b><small>Factories, fabrication, process</small></span></label>
+                <label class="opt"><input type="radio" name="industry" value="Creator / Consultant" /><span><b>Creator / Consultant</b><small>Personal brands, coaches</small></span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="step" data-step="2">
+              <legend>Which solutions do you need? <small class="text-slate-500 font-normal">(select all)</small></legend>
+              <div class="opt-grid">
+                <label class="opt"><input type="checkbox" name="solution" value="AI Video / Reels" /><span><b>AI Video / Reels</b><small>Explainers, shorts, retainers</small></span></label>
+                <label class="opt"><input type="checkbox" name="solution" value="3D Website" /><span><b>3D Website</b><small>Sites, landing pages, care</small></span></label>
+                <label class="opt"><input type="checkbox" name="solution" value="AI Automation / CRM" /><span><b>AI Automation / CRM</b><small>Agents, pipelines, follow-ups</small></span></label>
+                <label class="opt amber"><input type="checkbox" name="solution" value="Industrial ERP / MES / Dashboards" /><span><b>Industrial ERP / MES</b><small>OEE, dashboards, ERP</small></span></label>
+                <label class="opt amber span-2"><input type="checkbox" name="solution" value="Technical Media" /><span><b>Technical Media</b><small>Machine demos, HSE training, catalogues</small></span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="step" data-step="3">
+              <legend>What's your target timeline?</legend>
+              <div class="opt-grid">
+                <label class="opt"><input type="radio" name="timeline" value="ASAP (< 2 weeks)" /><span><b>ASAP</b><small>Within 2 weeks</small></span></label>
+                <label class="opt"><input type="radio" name="timeline" value="1–3 months" /><span><b>1–3 months</b><small>Planned launch</small></span></label>
+                <label class="opt"><input type="radio" name="timeline" value="3–6 months" /><span><b>3–6 months</b><small>Larger rollout</small></span></label>
+                <label class="opt"><input type="radio" name="timeline" value="Exploring" /><span><b>Just exploring</b><small>Need advice first</small></span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="step" data-step="4">
+              <legend>Where should we send your discovery slot?</legend>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div class="field"><input id="f-name" name="name" type="text" placeholder=" " autocomplete="name" required /><label for="f-name">Full name</label></div>
+                <div class="field"><input id="f-company" name="company" type="text" placeholder=" " autocomplete="organization" /><label for="f-company">Company</label></div>
+                <div class="field"><input id="f-email" name="email" type="email" placeholder=" " autocomplete="email" required /><label for="f-email">Work email</label></div>
+                <div class="field"><input id="f-phone" name="phone" type="tel" placeholder=" " autocomplete="tel" /><label for="f-phone">WhatsApp / Phone</label></div>
+                <div class="field sm:col-span-2"><textarea id="f-msg" name="message" rows="3" placeholder=" "></textarea><label for="f-msg">Anything else? (optional)</label></div>
+              </div>
+            </fieldset>
+
+            <div class="step-success" id="scope-success" hidden>
+              <div class="success-ring">✓</div>
+              <h3 class="font-display text-2xl text-white font-semibold mt-5">Brief received.</h3>
+              <p class="text-slate-400 mt-2">A founding partner will reach out within one business day.</p>
+              <div class="summary" id="scope-summary"></div>
+            </div>
+
+            <p class="form-error" id="form-error" role="alert"></p>
+
+            <div class="scope-nav" id="scope-nav">
+              <button type="button" class="btn-glass" id="step-back" disabled>Back</button>
+              <button type="button" class="btn-neon" id="step-next">Continue</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="relative border-t border-white/5 py-12">
+    <div class="mx-auto max-w-7xl px-5 md:px-8 flex flex-col md:flex-row gap-6 justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="font-display font-bold tracking-[0.18em] text-white">ZAAI<span class="text-accent"> LABS</span></span>
+        <span class="text-slate-500 text-sm">Practical AI · Digital Growth · Industrial Tech</span>
+      </div>
+      <div class="text-slate-500 text-sm">© <span id="year"></span> ZAAI LABS · Founded by Abhishek Kumar &amp; Nitesh Kumar · UAE</div>
+    </div>
+  </footer>
+
+  <!-- ===================== AI ASSISTANT ===================== -->
+  <div class="assistant" id="assistant">
+    <button class="assistant-fab" id="assistant-fab" aria-label="Ask ZAAI AI Assistant" aria-expanded="false" aria-controls="assistant-panel">
+      <span class="fab-core"></span>
+      <span class="fab-label">Ask ZAAI AI</span>
+    </button>
+    <section class="assistant-panel glass" id="assistant-panel" aria-label="ZAAI AI Assistant" hidden>
+      <header>
+        <div class="flex items-center gap-3">
+          <span class="bot-orb"></span>
+          <div><b class="text-white text-sm">ZAAI AI Assistant</b><small class="block text-[11px] text-emerald-400">● Online · instant answers</small></div>
+        </div>
+        <button id="assistant-close" aria-label="Close assistant">✕</button>
+      </header>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="chips" id="chat-chips"></div>
+      <form class="chat-input" id="chat-form">
+        <input id="chat-text" type="text" placeholder="Ask about services, packages, ERP…" autocomplete="off" aria-label="Message" />
+        <button type="submit" aria-label="Send">➤</button>
+      </form>
+    </section>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
